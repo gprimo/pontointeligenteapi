@@ -52,7 +52,7 @@ public class LancamentoServiceTest {
 
     @Test
     public void testBuscarLancamentoPorId() {
-        Optional<Optional<Lancamento>> lancamento = this.lancamentoService.buscarPorId(1L);
+        Optional<Lancamento> lancamento = this.lancamentoService.buscarPorId(1L);
 
         assertTrue(lancamento.isPresent());
     }
