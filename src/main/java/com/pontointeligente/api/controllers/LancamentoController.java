@@ -1,13 +1,12 @@
 package com.pontointeligente.api.controllers;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
+import com.pontointeligente.api.dtos.LancamentoDto;
+import com.pontointeligente.api.entities.Funcionario;
+import com.pontointeligente.api.entities.Lancamento;
+import com.pontointeligente.api.enums.TipoEnum;
+import com.pontointeligente.api.response.Response;
+import com.pontointeligente.api.services.FuncionarioService;
+import com.pontointeligente.api.services.LancamentoService;
 import org.apache.commons.lang3.EnumUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,24 +19,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.pontointeligente.api.dtos.LancamentoDto;
-import com.pontointeligente.api.entities.Funcionario;
-import com.pontointeligente.api.entities.Lancamento;
-import com.pontointeligente.api.enums.TipoEnum;
-import com.pontointeligente.api.response.Response;
-import com.pontointeligente.api.services.FuncionarioService;
-import com.pontointeligente.api.services.LancamentoService;
+import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/lancamentos")
@@ -66,6 +55,7 @@ public class LancamentoController {
      * @return ResponseEntity<Response<LancamentoDto>>
      */
     @GetMapping(value = "/funcionario/{funcionarioId}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<Page<LancamentoDto>>> listarPorFuncionarioId(
             @PathVariable("funcionarioId") Long funcionarioId,
             @RequestParam(value = "pag", defaultValue = "0") int pag,
@@ -89,6 +79,7 @@ public class LancamentoController {
      * @return ResponseEntity<Response<LancamentoDto>>
      */
     @GetMapping(value = "/funcionario/{funcionarioId}/todos")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<List<LancamentoDto>>> listarTodosPorFuncionarioId(
             @PathVariable("funcionarioId") Long funcionarioId) {
         log.info("Buscando todos os lançamentos por ID do funcionário: {}", funcionarioId);
@@ -110,6 +101,7 @@ public class LancamentoController {
      * @return ResponseEntity<Response<LancamentoDto>>
      */
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<LancamentoDto>> listarPorId(@PathVariable("id") Long id) {
         log.info("Buscando lançamento por ID: {}", id);
         Response<LancamentoDto> response = new Response<LancamentoDto>();
@@ -134,6 +126,7 @@ public class LancamentoController {
      * @throws ParseException
      */
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<LancamentoDto>> adicionar(@Valid @RequestBody LancamentoDto lancamentoDto,
                                                              BindingResult result) throws ParseException {
         log.info("Adicionando lançamento: {}", lancamentoDto.toString());
@@ -161,6 +154,7 @@ public class LancamentoController {
      * @throws ParseException
      */
     @PutMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<LancamentoDto>> atualizar(@PathVariable("id") Long id,
                                                              @Valid @RequestBody LancamentoDto lancamentoDto, BindingResult result) throws ParseException {
         log.info("Atualizando lançamento: {}", lancamentoDto.toString());
@@ -210,6 +204,7 @@ public class LancamentoController {
      * @return ResponseEntity<Response<LancamentoDto>>
      */
     @GetMapping(value = "/funcionario/{funcionarioId}/ultimo")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<LancamentoDto>> ultimoPorFuncionarioId(
             @PathVariable("funcionarioId") Long funcionarioId) {
         log.info("Buscando o último lançamento por ID do funcionário: {}", funcionarioId);

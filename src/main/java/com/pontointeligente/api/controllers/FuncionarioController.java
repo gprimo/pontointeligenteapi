@@ -1,27 +1,25 @@
 package com.pontointeligente.api.controllers;
 
-import java.math.BigDecimal;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
-import com.pontointeligente.api.entities.Empresa;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.*;
-
 import com.pontointeligente.api.dtos.FuncionarioDto;
 import com.pontointeligente.api.entities.Funcionario;
 import com.pontointeligente.api.response.Response;
 import com.pontointeligente.api.services.FuncionarioService;
 import com.pontointeligente.api.utils.PasswordUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/funcionarios")
@@ -46,6 +44,7 @@ public class FuncionarioController {
      * @throws NoSuchAlgorithmException
      */
     @PutMapping(value = "/{cpf}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<FuncionarioDto>> atualizar(@PathVariable("cpf") String cpf,
                                                               @Valid @RequestBody FuncionarioDto funcionarioDto, BindingResult result) throws NoSuchAlgorithmException {
         log.info("Atualizando funcionário: {}", funcionarioDto.toString());
@@ -72,6 +71,7 @@ public class FuncionarioController {
     }
 
     @GetMapping(value = "/empresa/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<List<FuncionarioDto>>> atualizar(@PathVariable("id") Long id) {
         log.info("Buscando funcionários por id de empresa: {}", id);
         Response<List<FuncionarioDto>> response = new Response<List<FuncionarioDto>>();

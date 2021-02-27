@@ -1,21 +1,5 @@
 package com.pontointeligente.api.controllers;
 
-import java.security.NoSuchAlgorithmException;
-
-import javax.validation.Valid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.pontointeligente.api.dtos.CadastroPJDto;
 import com.pontointeligente.api.entities.Empresa;
 import com.pontointeligente.api.entities.Funcionario;
@@ -24,6 +8,17 @@ import com.pontointeligente.api.response.Response;
 import com.pontointeligente.api.services.EmpresaService;
 import com.pontointeligente.api.services.FuncionarioService;
 import com.pontointeligente.api.utils.PasswordUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.security.NoSuchAlgorithmException;
 
 @RestController
 @RequestMapping("/api/cadastrar-pj")
@@ -50,6 +45,7 @@ public class CadastroPJController {
      * @throws NoSuchAlgorithmException
      */
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<CadastroPJDto>> cadastrar(@Valid @RequestBody CadastroPJDto cadastroPJDto,
                                                              BindingResult result) throws NoSuchAlgorithmException {
         log.info("Cadastrando PJ: {}", cadastroPJDto.toString());
