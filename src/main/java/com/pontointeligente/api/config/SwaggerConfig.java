@@ -44,10 +44,10 @@ public class SwaggerConfig {
 
     @Bean
     public SecurityConfiguration security() {
-        String token;
+        String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcmltb0BlbmxsaXRlLmNvbSIsInJvbGUiOiJST0xFX0FETUlOIiwiZW1wcmVzYUlkIjoxLCJjcmVhdGVkIjoxNjE0Mzc5MTIxMDMzLCJpZCI6MSwiZXhwIjoxNjE0OTgzOTIxfQ.HUfTc0YTp8yHp6zHozgVCCXXHD-s5JQWr9fUU_7_TzyI_9GmYhEPKILsatWjFzQbKZxMfDe-DSLfQUg2JtoSrg";
         try {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername("admin@kazale.com");
-            token = this.jwtTokenUtil.obterToken(userDetails);
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername("primo@enllite.com");
+            //token;
         } catch (Exception e) {
             token = "";
         }
