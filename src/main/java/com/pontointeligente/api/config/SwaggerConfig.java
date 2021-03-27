@@ -42,7 +42,6 @@ public class SwaggerConfig {
                 .build();
     }
 
-    @Bean
     public SecurityConfiguration security() {
         String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcmltb0BlbmxsaXRlLmNvbSIsInJvbGUiOiJST0xFX0FETUlOIiwiZW1wcmVzYUlkIjoxLCJjcmVhdGVkIjoxNjE0Mzc5MTIxMDMzLCJpZCI6MSwiZXhwIjoxNjE0OTgzOTIxfQ.HUfTc0YTp8yHp6zHozgVCCXXHD-s5JQWr9fUU_7_TzyI_9GmYhEPKILsatWjFzQbKZxMfDe-DSLfQUg2JtoSrg";
         try {
@@ -55,6 +54,6 @@ public class SwaggerConfig {
         return new SecurityConfiguration(null, null, null, null, "Bearer " + token, ApiKeyVehicle.HEADER,
                 "Authorization", ",");
     }
-    
+
 
 }
