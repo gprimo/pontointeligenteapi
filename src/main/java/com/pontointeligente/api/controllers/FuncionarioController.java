@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +43,6 @@ public class FuncionarioController {
      * @throws NoSuchAlgorithmException
      */
     @PutMapping(value = "/{cpf}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<FuncionarioDto>> atualizar(@PathVariable("cpf") String cpf,
                                                               @Valid @RequestBody FuncionarioDto funcionarioDto, BindingResult result) throws NoSuchAlgorithmException {
         log.info("Atualizando funcionário: {}", funcionarioDto.toString());
@@ -71,7 +69,6 @@ public class FuncionarioController {
     }
 
     @GetMapping(value = "/empresa/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<List<FuncionarioDto>>> atualizar(@PathVariable("id") Long id) {
         log.info("Buscando funcionários por id de empresa: {}", id);
         Response<List<FuncionarioDto>> response = new Response<List<FuncionarioDto>>();

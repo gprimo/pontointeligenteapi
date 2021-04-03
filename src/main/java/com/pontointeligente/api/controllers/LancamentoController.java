@@ -55,7 +55,6 @@ public class LancamentoController {
      * @return ResponseEntity<Response<LancamentoDto>>
      */
     @GetMapping(value = "/funcionario/{funcionarioId}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<Page<LancamentoDto>>> listarPorFuncionarioId(
             @PathVariable("funcionarioId") Long funcionarioId,
             @RequestParam(value = "pag", defaultValue = "0") int pag,
@@ -79,7 +78,6 @@ public class LancamentoController {
      * @return ResponseEntity<Response<LancamentoDto>>
      */
     @GetMapping(value = "/funcionario/{funcionarioId}/todos")
-    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<List<LancamentoDto>>> listarTodosPorFuncionarioId(
             @PathVariable("funcionarioId") Long funcionarioId) {
         log.info("Buscando todos os lançamentos por ID do funcionário: {}", funcionarioId);
@@ -101,7 +99,6 @@ public class LancamentoController {
      * @return ResponseEntity<Response<LancamentoDto>>
      */
     @GetMapping(value = "/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<LancamentoDto>> listarPorId(@PathVariable("id") Long id) {
         log.info("Buscando lançamento por ID: {}", id);
         Response<LancamentoDto> response = new Response<LancamentoDto>();
@@ -126,7 +123,6 @@ public class LancamentoController {
      * @throws ParseException
      */
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<LancamentoDto>> adicionar(@Valid @RequestBody LancamentoDto lancamentoDto,
                                                              BindingResult result) throws ParseException {
         log.info("Adicionando lançamento: {}", lancamentoDto.toString());
@@ -204,7 +200,6 @@ public class LancamentoController {
      * @return ResponseEntity<Response<LancamentoDto>>
      */
     @GetMapping(value = "/funcionario/{funcionarioId}/ultimo")
-    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<LancamentoDto>> ultimoPorFuncionarioId(
             @PathVariable("funcionarioId") Long funcionarioId) {
         log.info("Buscando o último lançamento por ID do funcionário: {}", funcionarioId);
